@@ -7,7 +7,7 @@ function UnmountOnCollapse() {
     const [expanded, setExpanded] = useState(false);
     const transitioningRef = useRef(false);
     const [transitionStatus, setTransitionStatus] = useState(
-        'has not yet begun'
+        'has not yet started'
     );
 
     const getContent = () => {
@@ -54,7 +54,7 @@ function UnmountOnCollapse() {
                     expanded={expanded}
                     transitionDuration={expanded ? '1s' : '1s'}
                     transitionTimingFunction={expanded ? 'ease-in' : 'linear'}
-                    onTransitionStart={() => setTransitionStatus('has begun')}
+                    onTransitionStart={() => setTransitionStatus('has started')}
                     onTransitionEnd={() => {
                         transitioningRef.current = false;
                         setTransitionStatus('is over');

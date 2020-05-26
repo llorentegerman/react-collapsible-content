@@ -1,0 +1,48 @@
+---
+name: Transition Events
+menu: Examples
+---
+
+import { Playground, Props } from 'docz';
+import { Code } from 'gatsby-theme-docz/src/components/Code';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from './common/ToggleButtonComponent';
+import TextComponent from './common/TextComponent';
+
+# Transition Events Example
+
+<!-- prettier-ignore-file -->
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        const [transitionStatus, setTransitionStatus] = React.useState(
+            'has not yet started'
+        );
+        return (
+            <Column>
+                <div style={{ marginBottom: 10 }}>
+                    <span>Transition status: </span>
+                    <b>{transitionStatus}</b>
+                </div>
+                <Column style={{ maxWidth: 600, width: '100%' }}>
+                    <ToggleButtonComponent
+                        expanded={expanded}
+                        onClick={() => setExpanded((prev) => !prev)}
+                    />
+                    <CollapsibleContent
+                        expanded={expanded}
+                        transitionDuration={'1.2s'}
+                        onTransitionStart={() =>
+                            setTransitionStatus('has started')
+                        }
+                        onTransitionEnd={() => setTransitionStatus('is over')}
+                    >
+                        <TextComponent />
+                    </CollapsibleContent>
+                </Column>
+            </Column>
+        );
+    }}
+</Playground>

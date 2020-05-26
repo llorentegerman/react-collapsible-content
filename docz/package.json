@@ -1,0 +1,28 @@
+{
+    "name": "react-collapsible-content-docs",
+    "version": "2.0.0",
+    "license": "MIT",
+    "homepage": "https://llorentegerman.github.io/react-collapsible-content",
+    "scripts": {
+        "dev": "clear && rm -rf .docz/ && docz dev",
+        "build": "docz build",
+        "serve": "docz serve",
+        "gh:deploy": "gh-pages -d .docz/dist"
+    },
+    "dependencies": {
+        "aphrodite": "^2.4.0",
+        "docz": "latest",
+        "gatsby-plugin-aphrodite": "^2.0.5",
+        "gatsby-theme-docz": "^2.3.1",
+        "prop-types": "^15.7.2",
+        "rc-collapse": "^2.0.0",
+        "react": "^16.11.0",
+        "react-collapse": "^5.0.1",
+        "react-collapsible": "^2.8.0",
+        "react-dom": "^16.11.0",
+        "simple-flexbox": "^2.3.1"
+    },
+    "devDependencies": {
+        "gh-pages": "^2.2.0"
+    }
+}

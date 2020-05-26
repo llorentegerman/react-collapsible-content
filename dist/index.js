@@ -1113,9 +1113,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-function useScrollHeight(ref, _ref) {
-  var onTransitionStart = _ref.onTransitionStart,
+function useScrollHeight(ref, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      onTransitionStart = _ref.onTransitionStart,
       onTransitionEnd = _ref.onTransitionEnd;
+
   var resizeObserver = React.useRef(null);
   var mutationObserver = React.useRef(null);
 
@@ -1214,6 +1216,9 @@ useScrollHeight.propTypes = {
     onTransitionStart: propTypes.func,
     onTransitionEnd: propTypes.func
   })
+};
+useScrollHeight.defaultProps = {
+  options: {}
 };
 
 function CollapsibleContent(_ref) {

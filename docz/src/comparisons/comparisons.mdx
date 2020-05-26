@@ -1,0 +1,89 @@
+---
+name: Comparisons
+route: /comparisons
+---
+
+import { Playground } from 'docz';
+import { Column, Row } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import Collapse, { Panel } from 'rc-collapse';
+require('rc-collapse/assets/index.css');
+// import { Collapse as ReactCollapse } from 'react-collapse';
+import ToggleButtonComponent from '../examples/common/ToggleButtonComponent';
+import DynamicText from '../examples/common/DynamicText';
+import CountdownComponent from '../examples/common/CountdownComponent';
+
+# Comparisons
+
+In this section we will make some comparisons with the most popular libraries in npm.
+
+See the difference in how both components transition to the new height.
+
+**react-collapsible-content** transitions smoothly, while **others** jumps directly to the new height.
+
+## How to import
+
+```js
+import CollapsibleContent from 'react-collapsible-content';
+```
+
+## rc-collapse
+
+In [rc-collapse](https://www.npmjs.com/package/rc-collapse) transition is activated when onClick and deactivated when transition ends. That is why you don't see animations when content changes.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(true);
+        const styles = {
+            container: { maxWidth: 800, width: '100%' }
+        };
+        return (
+            <Column style={styles.container}>
+                <p>
+                    Content will change in: <CountdownComponent delay={5000} />{' '}
+                    seconds (refresh to restart).
+                </p>
+                <Row horizontal='space-between'>
+                    <Column flexGrow={1} style={{ maxWidth: 375 }}>
+                        <ToggleButtonComponent
+                            expanded={expanded}
+                            onClick={() => setExpanded((prev) => !prev)}
+                            title='Toggle: react-collapsible-content'
+                        />
+                        <CollapsibleContent
+                            transitionDuration='.600s'
+                            expanded={expanded}
+                        >
+                            <DynamicText delay={5000} />
+                        </CollapsibleContent>
+                    </Column>
+                    <Column flexGrow={1} style={{ maxWidth: 375 }}>
+                        <Collapse
+                            activeKey={[expanded ? '1' : '']}
+                            onChange={() => setExpanded((prev) => !prev)}
+                            accordion={true}
+                        >
+                            <Panel key='1' header='Toggle: rc-collapse'>
+                                <DynamicText delay={5000} />
+                            </Panel>
+                        </Collapse>
+                    </Column>
+                </Row>
+            </Column>
+        );
+    }}
+</Playground>
+
+## react-collapse
+
+In [react-collapse](https://www.npmjs.com/package/react-collapse) **height: auto;** by default when it's expanded, that is why you don't see any transition after children changes. When it changes to collapsed **height** is set to 0px and when it changes to expanded **height** is set to the current **height** of the component (i.e.: 280px), and when transitions end **height** is set to **auto** again.
+
+_Note_: transitions doesn't work when **height** is set to **auto**.
+
+**coming soon**
+
+## react-collapsible
+
+In [react-collapsible](https://www.npmjs.com/package/react-collapsible)
+
+**coming soon**

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-function useScrollHeight(ref, { onTransitionStart, onTransitionEnd }) {
+function useScrollHeight(ref, { onTransitionStart, onTransitionEnd } = {}) {
     const resizeObserver = useRef(null);
     const mutationObserver = useRef(null);
     const [scrollHeight, setScrollHeight] = useState('100vh');
@@ -101,6 +101,10 @@ useScrollHeight.propTypes = {
         onTransitionStart: PropTypes.func,
         onTransitionEnd: PropTypes.func
     })
+};
+
+useScrollHeight.defaultProps = {
+    options: {}
 };
 
 export default useScrollHeight;

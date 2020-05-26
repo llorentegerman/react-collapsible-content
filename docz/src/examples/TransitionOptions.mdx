@@ -1,0 +1,65 @@
+---
+name: Transition Options
+menu: Examples
+---
+
+import { Playground, Props } from 'docz';
+import { Code } from 'gatsby-theme-docz/src/components/Code';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from './common/ToggleButtonComponent';
+import TextComponent from './common/TextComponent';
+
+# Transition Options
+
+Here we will see how to use **transitionDuration** and **transitionTimingFunction** in a basic and advanced mode.
+
+## Basic usage
+
+Set a custom value for **transitionDuration** and **transitionTimingFunction**.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        return (
+            <Column style={{ maxWidth: 600, width: '100%' }}>
+                <ToggleButtonComponent
+                    expanded={expanded}
+                    onClick={() => setExpanded((prev) => !prev)}
+                />
+                <CollapsibleContent
+                    expanded={expanded}
+                    transitionDuration='0.7s'
+                    transitionTimingFunction='linear'
+                >
+                    <TextComponent />
+                </CollapsibleContent>
+            </Column>
+        );
+    }}
+</Playground>
+
+## Advanced usage
+
+Different **transitionDuration** and **transitionTimingFunction** can be defined for expand or collapse actions.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        return (
+            <Column style={{ maxWidth: 600, width: '100%' }}>
+                <ToggleButtonComponent
+                    expanded={expanded}
+                    onClick={() => setExpanded((prev) => !prev)}
+                />
+                <CollapsibleContent
+                    expanded={expanded}
+                    transitionDuration={expanded ? '1.5s' : '.5s'}
+                    transitionTimingFunction={expanded ? 'ease-out' : 'ease-in'}
+                >
+                    <TextComponent />
+                </CollapsibleContent>
+            </Column>
+        );
+    }}
+</Playground>

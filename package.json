@@ -1,7 +1,7 @@
 {
     "name": "react-collapsible-content",
     "version": "1.0.0",
-    "description": "A React Component to create collapsible content",
+    "description": "A React Component to handle dynamic collapsible content",
     "author": "llorentegerman",
     "license": "MIT",
     "repository": "llorentegerman/react-collapsible-content",
@@ -44,6 +44,7 @@
         "microbundle-crl": "^0.13.10",
         "npm-run-all": "^4.1.5",
         "prettier": "^2.0.4",
+        "prop-types": "^15.7.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-scripts": "^3.4.1"

@@ -1080,7 +1080,7 @@ if (process.env.NODE_ENV !== 'production') {
 function useScrollHeight(ref, {
   onTransitionStart,
   onTransitionEnd
-}) {
+} = {}) {
   const resizeObserver = useRef(null);
   const mutationObserver = useRef(null);
   const [scrollHeight, setScrollHeight] = useState('100vh');
@@ -1175,6 +1175,9 @@ useScrollHeight.propTypes = {
     onTransitionStart: propTypes.func,
     onTransitionEnd: propTypes.func
   })
+};
+useScrollHeight.defaultProps = {
+  options: {}
 };
 
 function CollapsibleContent({

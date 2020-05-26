@@ -1,0 +1,44 @@
+---
+name: useScrollHeight
+menu: Components
+---
+
+import { Playground, Props } from 'docz';
+import { useScrollHeight } from 'react-collapsible-content';
+import useScrollHeightProps from './useScrollHeightProps';
+
+# useScrollHeight
+
+## Properties
+
+<Props of={useScrollHeightProps} />
+
+## How to import
+
+```js
+import { useScrollHeight } from 'react-collapsible-content';
+```
+
+## Basic usage
+
+<Playground>
+    {() => {
+        const contentContainerRef = React.useRef(null);
+        const { scrollHeight } = useScrollHeight(contentContainerRef, {
+            onTransitionStart: () => console.log('transition has started'),
+            onTransitionEnd: () => console.log('transition is over')
+        });
+        return (
+            <div ref={contentContainerRef}>
+                This can be any component that will change height at some point.
+                At that moment <b>scrollHeight</b> will contain the new height
+                value, and in case the component has set a transition, the
+                events <b>onTransitionStart</b> and <b>onTransitionEnd</b> will
+                warn us when it starts and ends respectively.
+                <br />
+                At this moment scrollHeight: <b>{scrollHeight}px</b> (try
+                resizing the window).
+            </div>
+        );
+    }}
+</Playground>

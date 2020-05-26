@@ -1,0 +1,55 @@
+---
+name: Unmount on Collapse
+menu: Examples
+---
+
+import { Playground, Props } from 'docz';
+import { Code } from 'gatsby-theme-docz/src/components/Code';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from './common/ToggleButtonComponent';
+import TextComponent from './common/TextComponent';
+
+# Unmount On Collapse
+
+In case you need to unmount the content when it's collapsed.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        const transitioningRef = React.useRef(false);
+        const [transitionStatus, setTransitionStatus] = React.useState('has not yet started');
+        const isMounted = expanded || transitioningRef.current;
+        return (
+            <Column>
+                <div style={{ marginBottom: 10 }}>
+                    <div>
+                        Transition status:{' '} <b>{transitionStatus}</b>
+                        <br />
+                        Is mounted?{' '} <b>{isMounted ? 'Yes' : 'No'}</b>
+                    </div>
+                </div>
+                <Column style={{ maxWidth: 600, width: '100%' }}>
+                    <ToggleButtonComponent
+                        expanded={expanded}
+                        onClick={() => {
+                            transitioningRef.current = true;
+                            setExpanded((prev) => !prev);
+                        }}
+                    />
+                    <CollapsibleContent
+                        expanded={expanded}
+                        onTransitionStart={() => setTransitionStatus('has started')}
+                        onTransitionEnd={() => {
+                            transitioningRef.current = false;
+                            setTransitionStatus('is over');
+                        }}
+                    >
+                        {isMounted ? <TextComponent /> : <div></div>}
+                    </CollapsibleContent>
+                </Column>
+            </Column>
+        );
+    }}
+
+</Playground>

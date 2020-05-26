@@ -1,0 +1,133 @@
+---
+name: Basic
+menu: Examples
+---
+
+import { Playground, Props } from 'docz';
+import { Code } from 'gatsby-theme-docz/src/components/Code';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from './common/ToggleButtonComponent';
+import TextComponent from './common/TextComponent';
+
+# Basic Example
+
+In these examples we are using [ToggleButtonComponent](#togglebuttoncomponent) and [TextComponent](#textcomponent) (see code below), but you can use your own components.
+
+We are also using [simple-flexbox](https://www.npmjs.com/package/simple-flexbox) and [aphrodite](https://www.npmjs.com/package/aphrodite) to make these UI Components.
+
+<!-- prettier-ignore-file -->
+
+## Basic usage
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        const styles = {
+            container: { maxWidth: 800, width: '100%' }
+        };
+        return (
+            <Column style={styles.container}>
+                <ToggleButtonComponent
+                    expanded={expanded}
+                    onClick={() => setExpanded((prev) => !prev)}
+                />
+                <CollapsibleContent expanded={expanded}>
+                    <TextComponent />
+                </CollapsibleContent>
+            </Column>
+        );
+    }}
+</Playground>
+
+## ToggleButtonComponent
+
+<Code className={'tsx'}>
+    {`
+import React from 'react';
+import { StyleSheet, css } from 'aphrodite/no-important';
+import { Row } from 'simple-flexbox';
+const styles = StyleSheet.create({
+    button: {
+        border: '1px solid #2EBFA5',
+        borderRadius: 4,
+        cursor: 'pointer',
+        backgroundColor: '#f7f7f7',
+        transition: 'border-radius .725s ease-in-out'
+    },
+    buttonExpanded: {
+        borderBottom: 'none',
+        borderRadius: '4px 4px 0px 0px',
+        transition: 'border-radius .1s ease-in-out'
+    },
+    arrow: {
+        display: 'inline-block',
+        borderTop: '5px solid transparent',
+        borderBottom: '5px solid transparent',
+        borderLeft: '5px solid currentColor',
+        verticalAlign: 'middle',
+        marginRight: '.7rem',
+        transform: 'translateY(-2px)',
+        transition: 'transform .425s ease-in-out'
+    },
+    arrowExpanded: {
+        transform: 'rotate(90deg) translateX(-1px)'
+    },
+    arrowContainer: {
+        display: 'block',
+        margin: 10,
+        marginLeft: 20
+    },
+    label: {
+        margin: 10
+    }
+});
+function ToggleButtonComponent({ title = 'TOGGLE', expanded, onClick, style }) {
+    return (
+        <Row
+            wrap={false}
+            className={css(styles.button, expanded && styles.buttonExpanded)}
+            onClick={onClick}
+            style={style}
+        >
+            <div className={css(styles.arrowContainer)}>
+                <span
+                    className={css(
+                        styles.arrow,
+                        expanded && styles.arrowExpanded
+                    )}
+                >
+                    {' '}
+                </span>
+            </div>
+            <span className={css(styles.label)}>{title}</span>
+        </Row>
+    );
+}
+export default ToggleButtonComponent;
+ `}
+</Code>
+
+## TextComponent
+
+<Code className={'tsx'}>
+    {`
+import React from 'react';
+export default function TextComponent({ limit }) {
+    const text = 'place a long text here'.substring(0, limit);
+    return (
+        <p
+            style={{
+                backgroundColor: '#2EBFA5',
+                borderRadius: '0px 0px 4px 4px',
+                color: '#2D3747',
+                margin: 0,
+                padding: 8
+            }}
+        >
+            {text}
+        </p>
+    );
+}
+`}
+</Code>

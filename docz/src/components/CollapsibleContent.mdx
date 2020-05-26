@@ -1,0 +1,45 @@
+---
+name: CollapsibleContent
+menu: Components
+---
+
+import { Playground, Props } from 'docz';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from '../examples/common/ToggleButtonComponent';
+import TextComponent from '../examples/common/TextComponent';
+import CollapsibleContentProps from './CollapsibleContentProps';
+
+# CollapsibleContent
+
+## Properties
+
+<Props of={CollapsibleContentProps} />
+
+## How to import
+
+```js
+import CollapsibleContent from 'react-collapsible-content';
+```
+
+## Basic usage
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        const styles = {
+            container: { maxWidth: 800, width: '100%' }
+        };
+        return (
+            <Column style={styles.container}>
+                <ToggleButtonComponent
+                    expanded={expanded}
+                    onClick={() => setExpanded((prev) => !prev)}
+                />
+                <CollapsibleContent expanded={expanded}>
+                    <TextComponent />
+                </CollapsibleContent>
+            </Column>
+        );
+    }}
+</Playground>

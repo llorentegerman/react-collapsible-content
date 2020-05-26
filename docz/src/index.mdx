@@ -1,0 +1,54 @@
+---
+name: Getting Started
+route: /
+---
+
+import { Playground } from 'docz';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from './examples/common/ToggleButtonComponent';
+import TextComponent from './examples/common/TextComponent';
+
+# react-collapsible-content
+
+A React Component to handle dynamic collapsible content
+
+## Instalation
+
+```bash
+npm install --save react-collapsible-content
+```
+
+```bash
+yarn add react-collapsible-content
+```
+
+## How to import
+
+```js
+import CollapsibleContent from 'react-collapsible-content';
+```
+
+## Basic usage
+
+In the examples we are using [ToggleButtonComponent](/src-examples-basic#togglebuttoncomponent) and [TextComponent](src-examples-basic#textcomponent) that are just UI components (see code in _Examples/Basic_), but you can use your own button and your own content.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(false);
+        const styles = {
+            container: { maxWidth: 800, width: '100%' }
+        };
+        return (
+            <Column style={styles.container}>
+                <ToggleButtonComponent
+                    expanded={expanded}
+                    onClick={() => setExpanded((prev) => !prev)}
+                />
+                <CollapsibleContent expanded={expanded}>
+                    <TextComponent />
+                </CollapsibleContent>
+            </Column>
+        );
+    }}
+</Playground>

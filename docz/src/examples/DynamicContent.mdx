@@ -1,0 +1,147 @@
+---
+name: Dynamic Content
+menu: Examples
+---
+
+import { Playground, Props } from 'docz';
+import { Code } from 'gatsby-theme-docz/src/components/Code';
+import { Column } from 'simple-flexbox';
+import CollapsibleContent from 'react-collapsible-content';
+import ToggleButtonComponent from './common/ToggleButtonComponent';
+import DynamicText from './common/DynamicText';
+import DynamicChildren from './common/DynamicChildren';
+import CountdownComponent from './common/CountdownComponent';
+
+# Dynamic Content
+
+See how the component behaves when it has dynamic content.
+In [comparisons](/comparisons) section you will see how other libraries reacts to the same content.
+
+See [CountdownComponent](#countdowncomponent) and [DynamicChildren](#dynamicchildren) definitions below.
+
+## Only child
+
+See how the component reacts when the content of its only child changes.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(true);
+        return (
+            <Column>
+                <p>
+                    Content will change in: <CountdownComponent delay={5000} />{' '}
+                    seconds (refresh to restart).
+                </p>
+                <Column style={{ maxWidth: 600, width: '100%' }}>
+                    <ToggleButtonComponent
+                        expanded={expanded}
+                        onClick={() => setExpanded((prev) => !prev)}
+                    />
+                    <CollapsibleContent expanded={expanded}>
+                        <DynamicText delay={5000} />
+                    </CollapsibleContent>
+                </Column>
+            </Column>
+        );
+    }}
+</Playground>
+
+## Multiple children
+
+See how the component reacts when new children are added.
+
+<Playground>
+    {() => {
+        const [expanded, setExpanded] = React.useState(true);
+        return (
+            <Column>
+                <p>
+                    Content will change in: <CountdownComponent delay={5000} />{' '}
+                    seconds (refresh to restart).
+                </p>
+                <Column style={{ maxWidth: 600, width: '100%' }}>
+                    <ToggleButtonComponent
+                        expanded={expanded}
+                        onClick={() => setExpanded((prev) => !prev)}
+                    />
+                    <CollapsibleContent expanded={expanded}>
+                        <DynamicChildren init={3} end={10} delay={5000} />
+                    </CollapsibleContent>
+                </Column>
+            </Column>
+        );
+    }}
+</Playground>
+
+## CountdownComponent
+
+<Code className={'tsx'}>
+    {`
+import React, { useEffect, useRef, useState } from 'react';
+export default function CountdownComponent({ delay }) {
+    const [counter, setCounter] = useState(delay / 1000);
+    const intervalRef = useRef();
+    useEffect(() => {
+        let mounted = true;
+        const endDate = new Date().getTime() + delay;
+        intervalRef.current = setInterval(() => {
+            let diff =
+                (Date.parse(new Date(endDate)) - Date.parse(new Date())) / 1000;
+            diff = Math.floor(diff);
+            if (diff <= 0) {
+                clearInterval(intervalRef.current);
+            }
+            setCounter(diff);
+        }, 1000);
+        setTimeout(() => {
+            if (!mounted) {
+                return;
+            }
+            clearInterval(intervalRef.current);
+        }, delay);
+        return () => {
+            mounted = false;
+            clearInterval(intervalRef.current);
+        };
+    }, [delay]);
+    return <span>{counter}</span>;
+}
+ `}
+</Code>
+
+## DynamicChildren
+
+<Code className={'tsx'}>
+    {`
+import React, { useEffect, useState } from 'react';
+const getArray = (count) => new Array(count).fill().map((_, i) => i + 1);
+export default function DynamicChildren({ delay = 2000, init = 3, end = 5 }) {
+    const [array, setArray] = useState(getArray(init));
+    useEffect(() => {
+        let mounted = true;
+        setTimeout(() => {
+            if (!mounted) {
+                return;
+            }
+            setArray(getArray(end));
+        }, delay);
+        return () => {
+            mounted = false;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [delay]);
+    return (
+        <React.Fragment>
+            {array.map((i) => (
+                <div
+                    style={{ backgroundColor: '#2EBFA5', color: 'white' }}
+                    key={i}
+                >
+                    {i}
+                </div>
+            ))}
+        </React.Fragment>
+    );
+}
+`}
+</Code>
