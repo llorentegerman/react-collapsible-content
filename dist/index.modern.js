@@ -1,5 +1,38 @@
 import React, { useRef, useState, useEffect } from 'react';
 
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
@@ -1077,21 +1110,26 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-function useScrollHeight(ref, {
-  onTransitionStart,
-  onTransitionEnd
-} = {}) {
-  const resizeObserver = useRef(null);
-  const mutationObserver = useRef(null);
-  const [scrollHeight, setScrollHeight] = useState('100vh');
-  const currentScrollHeight = useRef(scrollHeight);
+function useScrollHeight(ref, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      onTransitionStart = _ref.onTransitionStart,
+      onTransitionEnd = _ref.onTransitionEnd;
 
-  const handleResize = () => {
+  var resizeObserver = useRef(null);
+  var mutationObserver = useRef(null);
+
+  var _useState = useState('100vh'),
+      scrollHeight = _useState[0],
+      setScrollHeight = _useState[1];
+
+  var currentScrollHeight = useRef(scrollHeight);
+
+  var handleResize = function handleResize() {
     if (!ref.current) {
       return;
     }
 
-    const newHeight = ref.current.scrollHeight;
+    var newHeight = ref.current.scrollHeight;
 
     if (currentScrollHeight.current !== newHeight) {
       currentScrollHeight.current = newHeight;
@@ -1129,8 +1167,8 @@ function useScrollHeight(ref, {
     }
   }
 
-  useEffect(() => {
-    const refCurrent = ref.current;
+  useEffect(function () {
+    var refCurrent = ref.current;
 
     if (!refCurrent) {
       return;
@@ -1138,14 +1176,14 @@ function useScrollHeight(ref, {
 
     handleResize();
 
-    const cbTransitionStart = e => {
+    var cbTransitionStart = function cbTransitionStart(e) {
       if (e.propertyName === 'max-height') {
         removeResizeEventListener();
         onTransitionStart && onTransitionStart();
       }
     };
 
-    const cbTransitionEnd = e => {
+    var cbTransitionEnd = function cbTransitionEnd(e) {
       if (e.propertyName === 'max-height') {
         addResizeEventListener();
         onTransitionEnd && onTransitionEnd();
@@ -1155,7 +1193,7 @@ function useScrollHeight(ref, {
     addResizeEventListener();
     refCurrent.addEventListener('transitionstart', cbTransitionStart);
     refCurrent.addEventListener('transitionend', cbTransitionEnd);
-    return () => {
+    return function () {
       refCurrent.removeEventListener('transitionstart', cbTransitionStart);
       refCurrent.removeEventListener('transitionend', cbTransitionEnd);
       removeResizeEventListener();
@@ -1163,7 +1201,7 @@ function useScrollHeight(ref, {
     };
   }, [ref]);
   return {
-    scrollHeight
+    scrollHeight: scrollHeight
   };
 }
 
@@ -1180,32 +1218,32 @@ useScrollHeight.defaultProps = {
   options: {}
 };
 
-function CollapsibleContent({
-  children,
-  expanded,
-  style,
-  transitionDuration,
-  transitionTimingFunction,
-  onTransitionStart,
-  onTransitionEnd,
-  ...others
-}) {
-  const contentContainerRef = useRef(null);
-  const {
-    scrollHeight
-  } = useScrollHeight(contentContainerRef, {
-    onTransitionStart,
-    onTransitionEnd
-  });
-  return /*#__PURE__*/React.createElement("div", Object.assign({}, others, {
-    style: {
+function CollapsibleContent(_ref) {
+  var children = _ref.children,
+      expanded = _ref.expanded,
+      style = _ref.style,
+      transitionDuration = _ref.transitionDuration,
+      transitionTimingFunction = _ref.transitionTimingFunction,
+      onTransitionStart = _ref.onTransitionStart,
+      onTransitionEnd = _ref.onTransitionEnd,
+      others = _objectWithoutPropertiesLoose(_ref, ["children", "expanded", "style", "transitionDuration", "transitionTimingFunction", "onTransitionStart", "onTransitionEnd"]);
+
+  var contentContainerRef = useRef(null);
+
+  var _useScrollHeight = useScrollHeight(contentContainerRef, {
+    onTransitionStart: onTransitionStart,
+    onTransitionEnd: onTransitionEnd
+  }),
+      scrollHeight = _useScrollHeight.scrollHeight;
+
+  return /*#__PURE__*/React.createElement("div", _extends({}, others, {
+    style: _extends({
       overflow: 'hidden',
       transitionProperty: 'max-height',
-      transitionTimingFunction,
-      transitionDuration,
-      maxHeight: expanded ? scrollHeight : 0,
-      ...style
-    },
+      transitionTimingFunction: transitionTimingFunction,
+      transitionDuration: transitionDuration,
+      maxHeight: expanded ? scrollHeight : 0
+    }, style),
     ref: contentContainerRef
   }), children);
 }
@@ -1224,7 +1262,7 @@ CollapsibleContent.defaultProps = {
   transitionTimingFunction: 'ease-in-out'
 };
 
-const useScrollHeight$1 = useScrollHeight;
+var useScrollHeight$1 = useScrollHeight;
 
 export default CollapsibleContent;
 export { useScrollHeight$1 as useScrollHeight };

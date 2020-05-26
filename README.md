@@ -39,25 +39,9 @@ function Toggle() {
 }
 ```
 
-## How to run the examples in the package ().
+## Documentation.
 
-Run these commands in the project folder.
-
-```
-yarn link
-yarn install
-cd node_modules/react
-yarn link
-cd ../../node_modules/react-dom
-yarn link
-cd ../../example
-yarn install
-yarn link react-collapsible-content
-yarn link react
-yarn link react-dom
-yarn start
-
-```
+Read [documentation](https://llorentegerman.github.io/react-collapsible-content/).
 
 ## License
 
